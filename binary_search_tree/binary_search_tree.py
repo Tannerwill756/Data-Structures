@@ -10,6 +10,8 @@ This part of the project comprises two days:
    on the BSTNode class.
 """
 
+from collections import deque
+
 
 class BSTNode:
     def __init__(self, value):
@@ -73,22 +75,75 @@ class BSTNode:
         if self.left:
             self.left.for_each(fn)
 
+    def iter_depth_first_for_each(self, fn):
+        stack = []
+        stack.append(self)
+
+        while len(stack) > 0:
+            current_node = stack.pop()
+            if current_node.right:
+                stack.append(current_node.right)
+            if current_node.left:
+                stack.append(current_node.left)
+            fn(self.value)
+
+    def iter_breadth_first_search(self, fn):
+        # breadth first traversal follows FIFO ordering of its nodes
+        # init a deque
+        q = deque()
+        # add the first node to our q
+        q.append(self)
+
+        while len(q) > 0:
+            current_node = q.popleft()
+            if current_node.left:
+                q.append(current_node.left)
+            if current_node.right:
+                q.append(current_node.right)
+            fn(self.value)
+
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        if self.left:
+            self.left.in_order_print(node)
+        print(self.value)
+        if self.right:
+            self.right.in_order_print(node)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
+
     def bft_print(self, node):
-        pass
+        q = deque()
+
+        q.append(self)
+
+        while len(q) > 0:
+
+            current_node = q.popleft()
+            if current_node.left:
+                q.append(current_node.left)
+            if current_node.right:
+                q.append(current_node.right)
+            print(current_node.value)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
+
     def dft_print(self, node):
-        pass
+        stack = []
+        stack.append(self)
+
+        while len(stack) > 0:
+            current_node = stack.pop()
+            if current_node.right:
+                stack.append(current_node.right)
+            if current_node.left:
+                stack.append(current_node.left)
+            print(current_node.value)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -99,12 +154,21 @@ class BSTNode:
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
+
         pass
 
 
-bst = BSTNode(5)
-bst.insert(2)
-bst.insert(3)
+bst = BSTNode(1)
+# bst.insert(2)
+# bst.insert(3)
+# bst.insert(7)
+# bst.insert(6)
+# bst.contains(6)
+
+bst.insert(8)
+bst.insert(5)
 bst.insert(7)
 bst.insert(6)
-bst.contains(6)
+bst.insert(3)
+bst.insert(4)
+bst.insert(2)
