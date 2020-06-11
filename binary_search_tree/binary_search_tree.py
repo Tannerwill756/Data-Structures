@@ -160,7 +160,12 @@ class BSTNode:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
 
-        pass
+        if self.left:
+            self.left.post_order_dft(node)
+
+        if self.right:
+            self.right.post_order_dft(node)
+        print(self.value)
 
 
 bst = BSTNode(1)
